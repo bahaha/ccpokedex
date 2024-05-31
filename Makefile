@@ -6,7 +6,14 @@ all: build
 build:
 	@echo "Building..."
 	@templ generate
+	@tailwindcss -i internal/assets/app.css -o cmd/web/assets/app.css -c ./tailwind.config.cjs
 	@go build -o main cmd/api/main.go
+
+dev:
+	@templ generate
+	@tailwindcss -i internal/assets/app.css -o cmd/web/assets/app.css -c ./tailwind.config.cjs
+	@go build -tags dev -o main cmd/api/main.go
+
 
 # Run the application
 run:
