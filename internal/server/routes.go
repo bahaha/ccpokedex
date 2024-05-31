@@ -19,8 +19,7 @@ func (s *Server) RegisterRoutes() http.Handler {
 
 	r.Get("/health", s.healthHandler)
 
-	fileServer := http.FileServer(http.FS(web.Files))
-	r.Handle("/assets/*", fileServer)
+	r.Handle("/assets/*", web.Public())
 	r.Get("/web", templ.Handler(web.HelloForm()).ServeHTTP)
 	r.Post("/hello", web.HelloWebHandler)
 
