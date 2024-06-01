@@ -1,0 +1,20 @@
+package pokemon
+
+import (
+	"strconv"
+
+	p "ccpokedex/internal/server/pokemon"
+)
+
+templ PokemonProfile(pokemon *p.Pokemon) {
+	<div>
+		<h1>{ strconv.Itoa(pokemon.ID) }</h1>
+		<h2>{ pokemon.Name }</h2>
+		<img src={ pokemon.Avatar } alt={ pokemon.Name }/>
+		<div>
+			for _, typ := range pokemon.Types {
+				<span>{ typ }</span>
+			}
+		</div>
+	</div>
+}
