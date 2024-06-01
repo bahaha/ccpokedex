@@ -10,12 +10,16 @@ import (
 	_ "github.com/joho/godotenv/autoload"
 
 	"ccpokedex/internal/database"
+	"ccpokedex/internal/server/pokemon"
+	pokeapi "ccpokedex/internal/server/pokemon/poke_api"
 )
 
 type Server struct {
 	port int
 
 	db database.Service
+
+	pokemon pokemon.PokemonRepo
 }
 
 func NewServer() *http.Server {
@@ -23,7 +27,8 @@ func NewServer() *http.Server {
 	NewServer := &Server{
 		port: port,
 
-		db: database.New(),
+		db:      database.New(),
+		pokemon: pokeapi.NewPokeAPI(),
 	}
 
 	// Declare Server config
