@@ -18,3 +18,16 @@ func (h *PokemonRouteHandler) HandleGetPokemon(
 	}
 	return pokemon, err
 }
+
+func (h *PokemonRouteHandler) HandleGetPokemonTrends(
+	w http.ResponseWriter,
+	r *http.Request,
+) (interface{}, error) {
+	pokemons, err := h.handleGetPokemonTrends(w, r)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return nil, err
+	}
+
+	return pokemons, nil
+}

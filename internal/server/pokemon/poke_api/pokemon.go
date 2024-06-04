@@ -6,6 +6,8 @@ import (
 	"fmt"
 	"log/slog"
 	"net/http"
+	"strconv"
+	"sync"
 )
 
 var (
@@ -43,4 +45,44 @@ func (api *PokeAPI) GetPokemon(id int, lang string) (*p.Pokemon, error) {
 		Avatar: pokemon.Sprites.Other.OfficialArtwork.FrontDefault,
 		Types:  types,
 	}, nil
+}
+
+func (api *PokeAPI) GetPokemonTrends(lang string) ([]*p.Pokemon, error) {
+	pokemons := []*p.Pokemon{}
+
+	trends := &structs.PokemonPickup{}
+	_, err := send("/pickup", trends)
+	if err != nil {
+		slog.Error("error getting pokemon trends", "error", err)
+		return nil, err
+	}
+
+	wg := &sync.WaitGroup{}
+	getPokemonChan := make(chan *p.Pokemon)
+	for _, pokemon := range trends.Pickup {
+		id, err := strconv.Atoi(pokemon.No)
+		if err != nil {
+			slog.Error("error parsing pokemon id", "error", err)
+			continue
+		}
+
+		wg.Add(1)
+		go func(id int) {
+			defer wg.Done()
+			// TODO: handle get pokemon error
+			pokemon, _ := api.GetPokemon(id, lang)
+			getPokemonChan <- pokemon
+		}(id)
+	}
+
+	go func() {
+		wg.Wait()
+		close(getPokemonChan)
+	}()
+
+	for pokemon := range getPokemonChan {
+		pokemons = append(pokemons, pokemon)
+	}
+
+	return pokemons, nil
 }

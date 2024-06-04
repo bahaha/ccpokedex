@@ -13,5 +13,6 @@ func NewPokemon() *Pokemon {
 }
 
 type PokemonRepo interface {
+	GetPokemonTrends(lang string) ([]*Pokemon, error)
 	GetPokemon(id int, lang string) (*Pokemon, error)
 }

@@ -24,5 +24,24 @@ func (h *PokemonRouteHandler) HandleGetHtmxPokemon(
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
+}
 
+func (h *PokemonRouteHandler) HandleGetHtmxPokemonTrends(
+	w http.ResponseWriter,
+	r *http.Request,
+) {
+	pokemons, err := h.handleGetPokemonTrends(w, r)
+	if err != nil {
+		slog.Error("failed to get pokemon trends", "err", err)
+		return
+	}
+
+	component := web.PokemonTrends(pokemons)
+	err = component.Render(r.Context(), w)
+
+	if err != nil {
+		slog.Error("failed to render pokemon trends", "err", err)
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
 }
