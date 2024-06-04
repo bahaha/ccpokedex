@@ -1,0 +1,29 @@
+package pokemon
+
+import (
+	"fmt"
+
+	p "ccpokedex/internal/server/pokemon"
+)
+
+templ PokemonTrends(pokemons []*p.Pokemon) {
+	<section class="">
+		for _, pokemon := range pokemons {
+			<div class="">
+				<a href={ templ.URL(fmt.Sprintf("/pokemon/%d", pokemon.ID)) }>
+					<figure>
+						<img src={ pokemon.Avatar } alt={ pokemon.Name }/>
+						<figcaption>
+							<h3>{ pokemon.Name }</h3>
+							<div>
+								for _, typ := range pokemon.Types {
+									<span>{ typ }</span>
+								}
+							</div>
+						</figcaption>
+					</figure>
+				</a>
+			</div>
+		}
+	</section>
+}

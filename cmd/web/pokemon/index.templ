@@ -1,0 +1,14 @@
+package pokemon
+
+import (
+	"ccpokedex/cmd/web"
+)
+
+templ PokedexIndex() {
+	@web.Base() {
+		<div>
+			Pokedex Index Page
+		</div>
+		<section hx-get={ string(templ.URL("/web/pokemon/trends")) } hx-trigger="load" hx-swap="outerHTML"></section>
+	}
+}

@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"ccpokedex/cmd/web"
+	pw "ccpokedex/cmd/web/pokemon"
 	p "ccpokedex/internal/server/pokemon/handler"
 
 	"github.com/a-h/templ"
@@ -21,12 +22,16 @@ func (s *Server) RegisterRoutes() http.Handler {
 	r.Get("/api/health", jsonMarshal(s.healthHandler))
 
 	pokemon := p.NewPokemonRouteHandler(s.pokemon)
+	r.Get("/api/pokemon/trends", jsonMarshal(pokemon.HandleGetPokemonTrends))
 	r.Get("/api/pokemon/{id}", jsonMarshal(pokemon.HandleGetPokemon))
 
 	r.Handle("/assets/*", web.Public())
 	r.Get("/web", templ.Handler(web.HelloForm()).ServeHTTP)
 	r.Post("/hello", web.HelloWebHandler)
+	r.Get("/pokemon", templ.Handler(pw.PokedexIndex()).ServeHTTP)
+	r.Get("/pokemon/{id}", pokemon.HandleGetPokemonDetail)
 
+	r.Get("/web/pokemon/trends", pokemon.HandleGetHtmxPokemonTrends)
 	r.Get("/web/pokemon/{id}", pokemon.HandleGetHtmxPokemon)
 
 	return r

@@ -38,3 +38,15 @@ func (h *PokemonRouteHandler) handleGetPokemon(
 
 	return h.repo.GetPokemon(pokeId, lang)
 }
+
+func (h *PokemonRouteHandler) handleGetPokemonTrends(
+	w http.ResponseWriter,
+	r *http.Request,
+) ([]*p.Pokemon, error) {
+	lang := r.URL.Query().Get("lang")
+	if lang == "" {
+		lang = "en"
+	}
+
+	return h.repo.GetPokemonTrends(lang)
+}

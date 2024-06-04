@@ -1,0 +1,14 @@
+package pokemon
+
+import (
+	"ccpokedex/cmd/web"
+	p "ccpokedex/internal/server/pokemon"
+)
+
+templ PokemonDetail(pokemon *p.Pokemon) {
+	@web.Base() {
+		<div class="">
+			<img src={ pokemon.Avatar } alt={ pokemon.Name }/>
+		</div>
+	}
+}

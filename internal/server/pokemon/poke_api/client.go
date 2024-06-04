@@ -9,12 +9,22 @@ import (
 
 var (
 	api = "https://pokeapi.co/api/v2"
+	// TODO: extract as an isolated module
+	trends_api = "https://zukan.pokemon.co.jp/zukan-api/api"
 )
 
 func send(endpoint string, resp interface{}) (int, error) {
 	// TODO: cache
 
-	req, err := http.NewRequest(http.MethodGet, api+endpoint, nil)
+	url := api + endpoint
+	if endpoint == "/pickup" {
+		url = trends_api + endpoint
+	}
+
+	req, err := http.NewRequest(http.MethodGet, url, nil)
+	req.Header.Add("Content-Type", "application/json")
+	req.Header.Add("Accept", "application/json")
+
 	if err != nil {
 		return 0, err
 	}
