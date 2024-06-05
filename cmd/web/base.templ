@@ -2,7 +2,7 @@ package web
 
 templ Base() {
 	<!DOCTYPE html>
-	<html lang="en">
+	<html lang="en" class="dark">
 		<head>
 			<meta charset="utf-8"/>
 			<title>Pokedex</title>
@@ -18,10 +18,8 @@ templ Base() {
 			<script type="module" src="/assets/runtime/output/app-InCrv_49.js" defer></script>
 			<script type="module" src="/assets/runtime/output/vendor-BB97l-Lh.js" defer></script>
 		</head>
-		<body>
-			<main>
-				{ children... }
-			</main>
+		<body class="flex min-h-screen flex-col bg-background text-foreground antialiased" hx-boost="true">
+			{ children... }
 		</body>
 		<script>htmx.config.globalViewTransitions = true;</script>
 	</html>

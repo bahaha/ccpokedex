@@ -3,7 +3,7 @@ const defaultTheme = require("tailwindcss/defaultTheme");
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: "class",
-  content: ["internal/**/*.templ", "pkg/**/*.{templ,go}"],
+  content: ["internal/**/*.templ", "cmd/**/*.{templ,go}"],
   theme: {
     container: {
       center: true,
@@ -66,6 +66,14 @@ module.exports = {
       },
       fontFamily: {
         body: ["Noto Sans TC", ...defaultTheme.fontFamily.sans],
+      },
+      width: {
+        golden: "61.8%",
+        viewportGolden: "calc(100vw * 0.618)",
+        fib764: "76.4%",
+      },
+      gridAutoColumns: {
+        full: "100%",
       },
     },
   },
