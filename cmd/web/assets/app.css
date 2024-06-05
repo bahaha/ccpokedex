@@ -651,6 +651,10 @@ body {
   min-height: 100vh;
 }
 
+.w-10 {
+  width: 2.5rem;
+}
+
 .w-4 {
   width: 1rem;
 }
@@ -665,10 +669,6 @@ body {
 
 .touch-manipulation {
   touch-action: manipulation;
-}
-
-.auto-cols-fr {
-  grid-auto-columns: minmax(0, 1fr);
 }
 
 .auto-cols-full {

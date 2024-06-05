@@ -21,13 +21,16 @@ templ PokemonTrends(pokemons []*p.Pokemon) {
 						<figure class="grid grid-cols-2 gap-4 items-center">
 							<img src={ pokemon.Avatar } alt={ pokemon.Name }/>
 							<figcaption class="grid grid-rows-2 gap-2">
-								<h3 class="text-lg font-semibold">
-									<p>No.&nbsp;{ strconv.Itoa(pokemon.ID) }</p>
-									<p class="capitalize">{ pokemon.Name }</p>
+								<h3 class="font-semibold">
+									<p class="text-sm">No.&nbsp;{ strconv.Itoa(pokemon.ID) }</p>
+									<p class="text-lg capitalize">{ pokemon.Name }</p>
 								</h3>
-								<div class="grid grid-flow-col auto-cols-fr">
+								<div class="flex gap-2">
 									for _, typ := range pokemon.Types {
-										<span>{ typ }</span>
+										<figure>
+											<img class="w-10 h-10 mx-auto" src={ typ.Badge } alt={ typ.Name }/>
+											<figcaption>{ typ.Name }</figcaption>
+										</figure>
 									}
 								</div>
 							</figcaption>
