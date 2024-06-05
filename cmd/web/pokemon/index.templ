@@ -6,9 +6,12 @@ import (
 
 templ PokedexIndex() {
 	@web.Base() {
-		<div>
-			Pokedex Index Page
-		</div>
-		<section hx-get={ string(templ.URL("/web/pokemon/trends")) } hx-trigger="load" hx-swap="outerHTML"></section>
+		<main class="grid">
+			<div>
+				Pokedex Index Page
+			</div>
+			<section hx-get={ string(templ.URL("/web/pokemon/trends")) } hx-trigger="load" hx-swap="outerHTML"></section>
+			<div class="pokedex__pokemon-variants"></div>
+		</main>
 	}
 }

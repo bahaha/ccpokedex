@@ -2,28 +2,49 @@ package pokemon
 
 import (
 	"fmt"
+	"strconv"
 
 	p "ccpokedex/internal/server/pokemon"
 )
 
+var scriptHandle = templ.NewOnceHandle()
+
 templ PokemonTrends(pokemons []*p.Pokemon) {
-	<section class="">
-		for _, pokemon := range pokemons {
-			<div class="">
-				<a href={ templ.URL(fmt.Sprintf("/pokemon/%d", pokemon.ID)) }>
-					<figure>
-						<img src={ pokemon.Avatar } alt={ pokemon.Name }/>
-						<figcaption>
-							<h3>{ pokemon.Name }</h3>
-							<div>
-								for _, typ := range pokemon.Types {
-									<span>{ typ }</span>
-								}
-							</div>
-						</figcaption>
-					</figure>
-				</a>
+	@scriptHandle.Once() {
+		<script type="module" src="/assets/runtime/output/trends-CngHo_WH.js" defer></script>
+	}
+	<section class="pokedex__trends embla overflow-hidden">
+		<div class="grid grid-flow-col auto-cols-full mb-2">
+			for _, pokemon := range pokemons {
+				<div class="embla__slide bg-foreground/10 py-2">
+					<a class="mx-auto block w-fib764" href={ templ.URL(fmt.Sprintf("/pokemon/%d", pokemon.ID)) }>
+						<figure class="grid grid-cols-2 gap-4 items-center">
+							<img src={ pokemon.Avatar } alt={ pokemon.Name }/>
+							<figcaption class="grid grid-rows-2 gap-2">
+								<h3 class="text-lg font-semibold">
+									<p>No.&nbsp;{ strconv.Itoa(pokemon.ID) }</p>
+									<p class="capitalize">{ pokemon.Name }</p>
+								</h3>
+								<div class="grid grid-flow-col auto-cols-fr">
+									for _, typ := range pokemon.Types {
+										<span>{ typ }</span>
+									}
+								</div>
+							</figcaption>
+						</figure>
+					</a>
+				</div>
+			}
+		</div>
+		<div class="embla__controls">
+			<div class="embla__dots flex flex-wrap gap-2 justify-center">
+				for i := range pokemons {
+					<button
+						class="embla__dot p-1 w-4 h-4 border rounded-full touch-manipulation data-[state=selected]:bg-border/70"
+						data-index={ strconv.Itoa(i) }
+					></button>
+				}
 			</div>
-		}
+		</div>
 	</section>
 }

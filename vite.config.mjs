@@ -7,10 +7,11 @@ export default defineConfig({
     rollupOptions: {
       input: {
         app: "./internal/assets/app.js",
+        trends: "./internal/assets/pokemon-trends-carousel.js",
       },
       output: {
         manualChunks(id, { getModuleInfo }) {
-          if (id.includes("node_modules")) {
+          if (id.includes("htmx.org") || id.includes("alpinejs")) {
             return "vendor";
           }
         },
