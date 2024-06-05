@@ -7,6 +7,7 @@ import (
 	"log/slog"
 	"net/http"
 	"strconv"
+	"strings"
 	"sync"
 )
 
@@ -34,9 +35,13 @@ func (api *PokeAPI) GetPokemon(id int, lang string) (*p.Pokemon, error) {
 		return nil, err
 	}
 
-	types := []string{}
+	types := []p.PokemonType{}
 	for _, t := range pokemon.Types {
-		types = append(types, t.Type.Name)
+		typ := &p.PokemonType{
+			Name:  t.Type.Name,
+			Badge: fmt.Sprintf("/assets/pokemon/types/%s.png", strings.ToLower(t.Type.Name)),
+		}
+		types = append(types, *typ)
 	}
 
 	return &p.Pokemon{

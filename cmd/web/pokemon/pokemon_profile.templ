@@ -13,7 +13,7 @@ templ PokemonProfile(pokemon *p.Pokemon) {
 		<img src={ pokemon.Avatar } alt={ pokemon.Name }/>
 		<div>
 			for _, typ := range pokemon.Types {
-				<span>{ typ }</span>
+				<span>{ typ.Name }</span>
 			}
 		</div>
 	</div>
